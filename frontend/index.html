@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BB84 &amp; QBER Visualizer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>BB84 &amp; QBER Visualizer</h1>
+  <p>Step through the BB84 quantum key distribution protocol: Alice &amp; Bob's basis choices, sifting, eavesdropping (Eve), channel noise, and the resulting Quantum Bit Error Rate.</p>
+</header>
+
+<main>
+  <section class="panel controls">
+    <h2>Parameters</h2>
+    <label>Number of qubits: <b id="vN">24</b>
+      <input type="range" id="n" min="8" max="64" value="24"></label>
+    <label>Eve intercept probability: <b id="vEve">0%</b>
+      <input type="range" id="eve" min="0" max="100" value="0"></label>
+    <label>Channel noise (bit-flip): <b id="vNoise">0%</b>
+      <input type="range" id="noise" min="0" max="30" value="0"></label>
+    <label>Fraction of sifted key sampled for QBER: <b id="vSample">50%</b>
+      <input type="range" id="sample" min="10" max="100" step="5" value="50"></label>
+    <label>Random seed:
+      <input type="number" id="seed" value="42"></label>
+    <div class="buttons">
+      <button id="new">New run</button>
+      <button id="prev">◀ Back</button>
+      <button id="next" class="primary">Next stage ▶</button>
+      <button id="all">Show all</button>
+    </div>
+    <p class="hint">Abort threshold: QBER &gt; 11% (typical BB84 security bound). Eve alone causes ≈ 25% × intercept rate.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Protocol stages</h2>
+    <ol id="stages" class="stages"></ol>
+    <p id="explain" class="explain"></p>
+  </section>
+
+  <section class="panel wide">
+    <h2>Qubit-by-qubit view</h2>
+    <div class="legend">
+      Bases: <span class="chip z">+ rectilinear</span> <span class="chip x">× diagonal</span>
+      Polarization: + basis: 0 = ↑, 1 = →; × basis: 0 = ↗, 1 = ↖ &nbsp;|&nbsp;
+      <span class="chip ok">kept</span> <span class="chip err">error</span> <span class="chip drop">discarded</span>
+    </div>
+    <div class="scroll"><table id="table"></table></div>
+  </section>
+
+  <section class="panel results">
+    <h2>Results</h2>
+    <div id="stats"></div>
+    <div id="verdict"></div>
+  </section>
+
+  <section class="panel">
+    <h2>QBER vs. Eve's intercept rate</h2>
+    <canvas id="chart" width="520" height="300"></canvas>
+    <p class="hint">Blue line: theory (25% × p + noise). Dots: Monte-Carlo average (400 qubits × 20 trials per point) using the current noise setting. Red dashed: 11% abort threshold. The orange marker is your current run.</p>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

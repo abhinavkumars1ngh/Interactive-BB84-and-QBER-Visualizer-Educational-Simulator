@@ -22,6 +22,10 @@ bb84/
 ├── requirements.txt    # Pinned production and test dependencies
 ├── README.md           # Project architecture, math guide, and setup instructions
 ├── .gitignore          # Excludes virtual environment, bytecode, and test caches
+├── frontend/           # Standalone client-side web visualizer (HTML/CSS/JS, zero install)
+│   ├── index.html      # Responsive visualizer UI with controls, stage progression & chart
+│   ├── style.css       # Dark-theme layout and polarization chip styling
+│   └── app.js          # Pure JavaScript BB84 simulation, stage state machine & canvas chart
 └── tests/
     └── test_engine.py  # 11 deterministic verification tests for all BB84 protocol stages
 ```
@@ -112,6 +116,12 @@ python3 run.py
 
 # Run only the test suite
 python3 run.py --test-only
+```
+
+### 5. Standalone Web Frontend (Zero Dependencies)
+You can also run the client-side JavaScript visualizer directly in any browser without Python or Qiskit:
+```bash
+open frontend/index.html
 ```
 
 ---
